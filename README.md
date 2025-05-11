@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Autentication Portfolio project.
 
-## Getting Started
+Este é um projeto de autenticação desenvolvido com Next.js 15.3.2, Prisma, PostgreSQL, e TailwindCSS. O foco principal do projeto é a implementação de um sistema de autenticação com diferentes níveis de acesso:
 
-First, run the development server:
+Administrador (Admin) → Gerencia usuários e serviços.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Prestador de Serviço (Provider) → Gerencia seus serviços e agendamentos.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Usuário (User) → Acessa a agenda de serviços e faz agendamentos.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+🚀 Funcionalidades Implementadas:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+✅ Autenticação Completa:
 
-## Learn More
+Login para os três tipos de usuários.
 
-To learn more about Next.js, take a look at the following resources:
+Criação de Administrador restrita a usuários autenticados.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Criação de Prestador de Serviço e Usuário aberta ao público.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Middleware para proteção de rotas baseado no tipo de usuário.
 
-## Deploy on Vercel
+✅ Redirecionamento Automático:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Ao fazer login, o usuário é redirecionado para o dashboard correspondente:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Admin → /admin/dashboard
+
+Provider → /provider/dashboard
+
+User → /user/agenda
+
+✅ Logout Completo:
+
+Remoção do token do navegador e redirecionamento para a página de login.
+
+✅ Interface de Dashboard:
+
+Header reutilizável com botão de Logout.
+
+Páginas de Dashboard para cada tipo de usuário.
+
+⚙️ Instalação:
+
+1️⃣ Clone o repositório:
+
+$ git clone https://github.com/seuusuario/cg-authentication-project.git
+$ cd cg-authentication-project
+
+2️⃣ Instale as dependências:
+
+$ npm install
+
+3️⃣ Configure o arquivo .env:
+
+DATABASE_URL=postgresql://user:password@localhost:5432/cg_auth_project_db
+JWT_SECRET=sua_chave_secreta
+
+4️⃣ Execute as migrações do Prisma:
+
+$ npx prisma migrate dev
+
+5️⃣ Rode o servidor:
+
+$ npm run dev
+
+Acesse em: http://localhost:3000
+
+🛡️ Rotas Protegidas:
+
+Rota
+
+Nível de Acesso
+
+/admin/dashboard
+
+Administrador
+
+/provider/dashboard
+
+Prestador de Serviço
+
+/user/agenda
+
+Usuário
+
+
+📄 Licença:
+
+Este projeto está sob a licença MIT.
+

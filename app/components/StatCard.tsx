@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/app/components/ui/cards";
+import { Card, CardContent } from "@/app/components/ui/Cards";
 
 interface StatCardProps {
   title: string;

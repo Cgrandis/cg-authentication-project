@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { LogOut } from "lucide-react";
 
 const Header = () => {
   const router = useRouter();
@@ -28,14 +29,19 @@ const Header = () => {
   };
 
   return (
-    <header className="flex justify-between items-center p-4 bg-gray-800 text-white">
-      <h1 className="text-xl font-bold">Dashboard</h1>
+    <header className="flex justify-between items-center px-6 py-4 bg-white border-b border-gray-200 shadow-sm">
+      <h1 className="text-2xl font-semibold text-gray-800">Dashboard</h1>
       <button
         onClick={handleLogout}
         disabled={loading}
-        className="bg-red-600 px-4 py-2 rounded hover:bg-red-700"
+        className="text-gray-600 hover:text-red-600 transition"
+        title="Sair"
       >
-        {loading ? "Saindo..." : "Logout"}
+        {loading ? (
+          <span className="text-sm">Saindo...</span>
+        ) : (
+          <LogOut className="w-6 h-6" />
+        )}
       </button>
     </header>
   );

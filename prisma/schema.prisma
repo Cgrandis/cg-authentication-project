@@ -24,11 +24,11 @@ model Service {
   title          String
   description    String
   duration       Int
-  photos         String[] // até 6 URLs de imagens
-  instagramLink  String?  // link opcional
-  contactNumber  String?  // telefone opcional
-  email          String?  // email opcional
-  availability   Json     // ranges de disponibilidade em formato JSON
+  photos         String[] 
+  instagramLink  String? 
+  contactNumber  String?  
+  email          String?  
+  availability   Json?    
   provider       User     @relation("ProviderServices", fields: [providerId], references: [id])
   providerId     String
   bookings       Booking[]

@@ -9,17 +9,23 @@ datasource db {
 }
 
 model User {
-  id             String    @id @default(uuid())
-  name           String
-  email          String    @unique
-  password       String
-  role           Role
-  contactNumber  String?   
-  instagramLink  String?   
-  profilePhoto   String?   
-  bookings       Booking[]
-  services       Service[] @relation("ProviderServices")
-  createdAt      DateTime  @default(now())
+  id              String    @id @default(uuid())
+  name            String
+  email           String    @unique
+  password        String
+  role            Role
+  contactNumber   String?
+  instagramLink   String?
+  linkedin        String?
+  city            String?
+  country         String?
+  bio             String?
+  specialties     String?
+  profilePhoto    String?
+  portfolioPhotos String[] // novo campo de múltiplas imagens
+  bookings        Booking[]
+  services        Service[] @relation("ProviderServices")
+  createdAt       DateTime  @default(now())
 }
 
 model Service {

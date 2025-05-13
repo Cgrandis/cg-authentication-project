@@ -4,22 +4,29 @@ import path from "path";
 import { randomUUID } from "crypto";
 
 export async function POST(req: Request) {
-  const formData = await req.formData();
-  const files = formData.getAll("photos");
+  try {
+    const formData = await req.formData();
+    const files = formData.getAll("photos");
 
-  const uploaded: string[] = [];
+    const uploaded: string[] = [];
 
-  for (const file of files) {
-    if (file instanceof File) {
-      const bytes = await file.arrayBuffer();
-      const buffer = Buffer.from(bytes);
-      const fileName = `${randomUUID()}-${file.name}`;
-      const filePath = path.join(process.cwd(), "public/uploads", fileName);
+    for (const file of files) {
+     
+      if (typeof (file as any)?.arrayBuffer === "function") {
+        const blob = file as Blob;
+        const bytes = await blob.arrayBuffer();
+        const buffer = Buffer.from(bytes);
+        const fileName = `${randomUUID()}.webp`;
+        const filePath = path.join(process.cwd(), "public/uploads", fileName);
 
-      await writeFile(filePath, buffer);
-      uploaded.push(`/uploads/${fileName}`);
+        await writeFile(filePath, buffer);
+        uploaded.push(`/uploads/${fileName}`);
+      }
     }
-  }
 
-  return NextResponse.json({ urls: uploaded }, { status: 200 });
+    return NextResponse.json({ urls: uploaded }, { status: 200 });
+  } catch (error) {
+    console.error("Erro no upload:", error);
+    return NextResponse.json({ error: "Erro ao processar upload" }, { status: 500 });
+  }
 }

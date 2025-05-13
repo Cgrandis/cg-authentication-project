@@ -53,12 +53,19 @@ const AddService = () => {
   const handleFotosUpload = async (files: File[]) => {
     const formData = new FormData();
     files.forEach((file) => formData.append("photos", file));
-
+  
     const res = await fetch("/api/upload", {
       method: "POST",
       body: formData,
     });
-
+  
+    if (!res.ok) {
+      const text = await res.text();
+      console.error("Erro ao fazer upload:", text);
+      alert("Erro ao fazer upload das imagens.");
+      return;
+    }
+  
     const data = await res.json();
     setForm((prev) => ({ ...prev, photos: data.urls }));
   };

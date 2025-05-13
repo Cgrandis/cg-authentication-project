@@ -34,7 +34,7 @@ const UploadFotos = ({ onUpload }: { onUpload: (files: File[]) => void }) => {
 
   return (
     <div className="space-y-4">
-      <label className="font-semibold text-lg">Fotos do Serviço (máx. 6)</label>
+      <label className="font-semibold text-lg">Fotos (máx. 6)</label>
 
       <div className="border-2 border-dashed border-gray-400 rounded-lg p-6 text-center cursor-pointer hover:border-green-500 transition-all">
         <label className="cursor-pointer text-gray-600 flex flex-col items-center space-y-2">

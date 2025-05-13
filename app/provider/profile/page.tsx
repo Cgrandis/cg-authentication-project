@@ -3,17 +3,27 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/app/components/Header";
-import { Camera, Trash2 } from "lucide-react";
+import { Eye, Camera, Trash2 } from "lucide-react";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import UploadFotos from "@/app/components/ui/UploadPicsService";
 
 const ProviderProfile = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [provider, setProvider] = useState({
+    id: "",
     name: "",
     email: "",
     contactNumber: "",
     instagramLink: "",
     profilePhoto: "",
+    city: "",
+    country: "",
+    bio: "",
+    specialties: "",
+    linkedin: "",
+    portfolioPhotos: [] as string[],
   });
   const [photoPreview, setPhotoPreview] = useState<string>("");
 
@@ -30,7 +40,7 @@ const ProviderProfile = () => {
     fetchProfile();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setProvider({ ...provider, [e.target.name]: e.target.value });
   };
 
@@ -49,6 +59,19 @@ const ProviderProfile = () => {
     const data = await res.json();
     setProvider((prev) => ({ ...prev, profilePhoto: data.urls[0] }));
     setPhotoPreview(data.urls[0]);
+  };
+
+  const handlePortfolioUpload = async (files: File[]) => {
+    const formData = new FormData();
+    files.forEach((file) => formData.append("photos", file));
+
+    const res = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await res.json();
+    setProvider((prev) => ({ ...prev, portfolioPhotos: data.urls }));
   };
 
   const handleUpdate = async () => {
@@ -85,7 +108,19 @@ const ProviderProfile = () => {
     <div className="bg-gray-50 min-h-screen">
       <Header />
       <div className="max-w-3xl mx-auto p-6 sm:p-10">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">Editar Perfil</h2>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">Editar Perfil</h2>
+          {provider.id && (
+            <button
+              onClick={() => router.push(`/provider/profile/profileview/${provider.id}`)}
+              className="flex items-center gap-2 text-blue-600 hover:text-blue-800 hover:underline text-sm"
+              title="Visualizar perfil público"
+            >
+              <Eye className="w-4 h-4" /> Ver perfil público
+            </button>
+          )}
+        </div>
+
         <div className="bg-white rounded-xl shadow p-6 space-y-6">
           <div className="flex items-center gap-4">
             {photoPreview ? (
@@ -99,7 +134,7 @@ const ProviderProfile = () => {
                 <Camera className="text-gray-500" />
               </div>
             )}
-            <label className="cursor-pointer text-blue-600 hover:underline">
+            <label className="cursor-pointer text-[#260E59] hover:underline">
               Trocar foto
               <input
                 type="file"
@@ -129,23 +164,68 @@ const ProviderProfile = () => {
             disabled
           />
 
+          <div>
+            <label className="block text-sm text-gray-600 mb-1">Telefone de contato</label>
+            <PhoneInput
+              country={'br'}
+              value={provider.contactNumber ?? ""}
+              onChange={(value) => setProvider((prev) => ({ ...prev, contactNumber: value }))}
+              inputStyle={{
+                width: '100%',
+                padding: '14px',
+                borderRadius: '0.5rem',
+                border: '1px solid #d1d5db',
+              }}
+              specialLabel=""
+            />
+          </div>
+
           <input
             type="text"
-            name="contactNumber"
-            placeholder="Telefone de contato"
+            name="city"
+            placeholder="Cidade"
             className="w-full p-3 border border-gray-300 rounded-lg"
-            value={provider.contactNumber ?? ""}
+            value={provider.city ?? ""}
             onChange={handleChange}
           />
 
           <input
             type="text"
-            name="instagramLink"
-            placeholder="Link do Instagram"
+            name="country"
+            placeholder="País"
             className="w-full p-3 border border-gray-300 rounded-lg"
-            value={provider.instagramLink ?? ""}
+            value={provider.country ?? ""}
             onChange={handleChange}
           />
+
+          <textarea
+            name="bio"
+            placeholder="Biografia"
+            className="w-full p-3 border border-gray-300 rounded-lg"
+            value={provider.bio ?? ""}
+            onChange={handleChange}
+            rows={4}
+          />
+
+          <input
+            type="text"
+            name="specialties"
+            placeholder="Especialidades (separadas por vírgula)"
+            className="w-full p-3 border border-gray-300 rounded-lg"
+            value={provider.specialties ?? ""}
+            onChange={handleChange}
+          />
+
+          <input
+            type="text"
+            name="linkedin"
+            placeholder="Perfil do LinkedIn"
+            className="w-full p-3 border border-gray-300 rounded-lg"
+            value={provider.linkedin ?? ""}
+            onChange={handleChange}
+          />
+
+          <UploadFotos onUpload={handlePortfolioUpload} />
 
           <div className="flex justify-between gap-4 pt-4">
             <button

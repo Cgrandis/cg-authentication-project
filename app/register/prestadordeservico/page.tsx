@@ -30,26 +30,33 @@ const RegisterProvider = () => {
       alert("As senhas não coincidem!");
       return;
     }
-
+  
     setLoading(true);
-
+  
     try {
       const response = await fetch("/api/auth/register/registerProvider", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          password: form.password,
+        }),
       });
-
+  
+      const data = await response.json();
+  
       if (response.ok) {
         alert("Prestador de Serviço criado com sucesso!");
         router.push("/login/prestadordeservico_usuario");
       } else {
-        alert("Erro ao criar Prestador de Serviço.");
+        alert(data.error || "Erro ao criar Prestador de Serviço.");
       }
     } catch (error) {
       console.error("Erro no cadastro:", error);
+      alert("Erro inesperado.");
     } finally {
       setLoading(false);
     }

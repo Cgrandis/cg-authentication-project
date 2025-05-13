@@ -20,13 +20,18 @@ model User {
 }
 
 model Service {
-  id          String   @id @default(uuid())
-  title       String
-  description String
-  duration    Int
-  provider    User     @relation("ProviderServices", fields: [providerId], references: [id])
-  providerId  String
-  bookings    Booking[]
+  id             String   @id @default(uuid())
+  title          String
+  description    String
+  duration       Int
+  photos         String[] // até 6 URLs de imagens
+  instagramLink  String?  // link opcional
+  contactNumber  String?  // telefone opcional
+  email          String?  // email opcional
+  availability   Json     // ranges de disponibilidade em formato JSON
+  provider       User     @relation("ProviderServices", fields: [providerId], references: [id])
+  providerId     String
+  bookings       Booking[]
 }
 
 model Booking {

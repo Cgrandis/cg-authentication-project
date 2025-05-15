@@ -1,22 +1,31 @@
-import { NextResponse } from "next/server";
-import { verify } from "jsonwebtoken";
+import { getToken } from "next-auth/jwt";
+import { NextRequest, NextResponse } from "next/server";
+import prisma from "@/lib/prisma";
 
-export async function GET(req: Request) {
-  const token = req.headers.get("cookie")?.split("token=")[1]?.split(";")[0];
-  if (!token) {
+const secret = process.env.NEXTAUTH_SECRET;
+
+export async function GET(req: NextRequest) {
+  const token = await getToken({ req, secret });
+
+  if (!token || !token.id) {
     return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
   }
 
-  try {
-    const decoded = verify(token, process.env.JWT_SECRET as string) as {
-      id: string;
-      name: string;
-      email: string;
-      role: string;
-    };
+  const user = await prisma.user.findUnique({
+    where: { id: token.id as string },
+  });
 
-    return NextResponse.json(decoded, { status: 200 });
-  } catch (error) {
-    return NextResponse.json({ error: "Token inválido" }, { status: 401 });
+  if (!user) {
+    return NextResponse.json({ error: "Usuário não encontrado" }, { status: 404 });
   }
+
+  return NextResponse.json(
+    {
+      id: token.id,
+      name: token.name,
+      email: token.email,
+      role: token.role,
+    },
+    { status: 200 }
+  );
 }

@@ -1,112 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Eye, EyeOff } from "lucide-react";
+import LoginForm from "@/app/components/ui/LoginForm";
 
-const LoginProviderUser = () => {
-  const router = useRouter();
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const token = data.token;
-        const role = data.role;
-
-        document.cookie = `token=${token}; Path=/`;
-
-        if (role === "PROVIDER") {
-          router.push("/provider/dashboard");
-        } else if (role === "USER") {
-          router.push("/user/agenda");
-        } else {
-          alert("Tipo de usuário inválido");
-        }
-      } else {
-        alert("Login ou senha inválidos");
-      }
-    } catch (error) {
-      console.error("Erro ao fazer login:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+export default function LoginPrestadorOuUsuarioPage() {
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md p-8 bg-white rounded-lg shadow-md"
-      >
-        <h2 className="text-3xl font-bold mb-6 text-center text-gray-700">
-          Login
-        </h2>
-
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-
-        <div className="relative w-full mb-6">
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            placeholder="Senha"
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-            value={form.password}
-            onChange={handleChange}
-            required
-          />
-          <div
-            className="absolute right-3 top-3 cursor-pointer text-gray-500"
-            onClick={togglePasswordVisibility}
-          >
-            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-          </div>
-        </div>
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full p-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all"
-        >
-          {loading ? "Carregando..." : "Entrar"}
-        </button>
-      </form>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#F7F9FC] to-[#DCE3F1]">
+      <LoginForm onSuccessRedirect="/user/agenda" />
     </div>
   );
-};
-
-export default LoginProviderUser;
+}

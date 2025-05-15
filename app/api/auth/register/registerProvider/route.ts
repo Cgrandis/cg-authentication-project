@@ -12,7 +12,7 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    // ✅ Verifica se já existe um usuário com o e-mail informado
+  
     const existingUser = await prisma.user.findUnique({
       where: { email },
     });

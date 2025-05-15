@@ -9,13 +9,27 @@ export async function POST(req: Request) {
     const { email, password } = await req.json();
 
     const user = await prisma.user.findFirst({
-      where: {
-        email
-      }
+      where: { email },
+      include: { accounts: true },
     });
 
     if (!user) {
       return NextResponse.json({ error: "Credenciais inválidas" }, { status: 401 });
+    }
+
+    const hasGoogleAccount = user.accounts?.some(acc => acc.provider === "google");
+    if (hasGoogleAccount) {
+      return NextResponse.json(
+        { error: "Faça login usando o Google." },
+        { status: 403 }
+      );
+    }
+
+    if (!user.password) {
+      return NextResponse.json(
+        { error: "Este usuário não tem senha cadastrada." },
+        { status: 401 }
+      );
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);

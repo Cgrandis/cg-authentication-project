@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState, useRef, useLayoutEffect } from "react";
 import Header from "@/app/components/Header";
-import { Eye, Camera, Trash2 } from "lucide-react";
+import { Eye, Camera, Trash2, Copy } from "lucide-react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import UploadFotos from "@/app/components/ui/UploadPicsService";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const ProviderProfile = () => {
   const router = useRouter();
@@ -24,25 +25,41 @@ const ProviderProfile = () => {
     specialties: "",
     linkedin: "",
     portfolioPhotos: [] as string[],
+    slug: "",
   });
   const [photoPreview, setPhotoPreview] = useState<string>("");
+  const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      const res = await fetch("/api/auth/me", { credentials: "include" });
-      if (res.ok) {
-        const data = await res.json();
-        setProvider(data);
-        setPhotoPreview(data.profilePhoto || "");
-      }
-    };
+  const bioRef = useRef<HTMLTextAreaElement>(null);
+  const specialtiesRef = useRef<HTMLTextAreaElement>(null);
 
-    fetchProfile();
-  }, []);
+  useLayoutEffect(() => {
+    if (bioRef.current) {
+      bioRef.current.style.height = "auto";
+      bioRef.current.style.height = `${bioRef.current.scrollHeight}px`;
+    }
+    if (specialtiesRef.current) {
+      specialtiesRef.current.style.height = "auto";
+      specialtiesRef.current.style.height = `${specialtiesRef.current.scrollHeight}px`;
+    }
+  }, [provider.bio, provider.specialties]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setProvider({ ...provider, [e.target.name]: e.target.value });
   };
+
+  const fetchProfile = async () => {
+    const res = await fetch("/api/auth/me", { credentials: "include" });
+    if (res.ok) {
+      const data = await res.json();
+      setProvider(data);
+      setPhotoPreview(data.profilePhoto || "");
+    }
+  };
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
 
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -104,21 +121,53 @@ const ProviderProfile = () => {
     }
   };
 
+  const handleCopyLink = () => {
+    if (!provider.slug) return;
+
+    const publicLink = `${window.location.origin}/profile/${provider.slug}`;
+    navigator.clipboard.writeText(publicLink);
+    setCopied(true);
+
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="bg-gray-50 min-h-screen">
       <Header />
       <div className="max-w-3xl mx-auto p-6 sm:p-10">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-800">Editar Perfil</h2>
-          {provider.id && (
-            <button
-              onClick={() => router.push(`/provider/profile/profileview/${provider.id}`)}
-              className="flex items-center gap-2 text-blue-600 hover:text-blue-800 hover:underline text-sm"
-              title="Visualizar perfil público"
-            >
-              <Eye className="w-4 h-4" /> Ver perfil público
-            </button>
-          )}
+          <div className="flex gap-4 items-center">
+            {provider.id && (
+              <Link
+                href={`/provider/profile/profileview/${provider.id}`}
+                className="flex items-center gap-2 text-blue-600 hover:text-blue-800 hover:underline text-sm"
+                title="Visualizar perfil público"
+              >
+                <Eye className="w-4 h-4" /> Ver perfil público
+              </Link>
+            )}
+            {provider.slug && (
+              <div className="flex items-center gap-3">
+                <Link
+                  href={`/profile/${provider.slug}`}
+                  target="_blank"
+                  className="text-sm text-green-700 hover:text-green-900 hover:underline"
+                  title="Ver página pública"
+                >
+                  /profile/{provider.slug}
+                </Link>
+                <button
+                  onClick={handleCopyLink}
+                  className="flex items-center gap-1 text-gray-600 hover:text-black hover:underline text-sm"
+                  title="Copiar link público"
+                >
+                  <Copy className="w-4 h-4" />
+                  {copied ? "Copiado!" : "Copiar"}
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="bg-white rounded-xl shadow p-6 space-y-6">
@@ -199,19 +248,19 @@ const ProviderProfile = () => {
           />
 
           <textarea
+            ref={bioRef}
             name="bio"
             placeholder="Biografia"
-            className="w-full p-3 border border-gray-300 rounded-lg"
+            className="w-full p-3 border border-gray-300 rounded-lg overflow-hidden resize-none"
             value={provider.bio ?? ""}
             onChange={handleChange}
-            rows={4}
           />
 
-          <input
-            type="text"
+          <textarea
+            ref={specialtiesRef}
             name="specialties"
             placeholder="Especialidades (separadas por vírgula)"
-            className="w-full p-3 border border-gray-300 rounded-lg"
+            className="w-full p-3 border border-gray-300 rounded-lg overflow-hidden resize-none"
             value={provider.specialties ?? ""}
             onChange={handleChange}
           />
@@ -222,6 +271,15 @@ const ProviderProfile = () => {
             placeholder="Perfil do LinkedIn"
             className="w-full p-3 border border-gray-300 rounded-lg"
             value={provider.linkedin ?? ""}
+            onChange={handleChange}
+          />
+
+          <input
+            type="text"
+            name="instagramLink"
+            placeholder="Link do Instagram"
+            className="w-full p-3 border border-gray-300 rounded-lg"
+            value={provider.instagramLink ?? ""}
             onChange={handleChange}
           />
 

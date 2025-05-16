@@ -1,18 +1,20 @@
 import { NextResponse } from "next/server";
-import { verify } from "jsonwebtoken";
 import prisma from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function PUT(req: Request) {
   try {
-    const cookie = req.headers.get("cookie");
-    const token = cookie?.split("token=")[1]?.split(";")[0];
-    if (!token) return NextResponse.json({ error: "Token ausente" }, { status: 401 });
+    const session = await getServerSession(authOptions);
 
-    const decoded = verify(token, process.env.JWT_SECRET as string) as any;
+    if (!session || !session.user?.id) {
+      return NextResponse.json({ error: "Não autenticado." }, { status: 401 });
+    }
+
     const body = await req.json();
 
     const updatedUser = await prisma.user.update({
-      where: { id: decoded.id },
+      where: { id: session.user.id },
       data: {
         name: body.name,
         contactNumber: body.contactNumber,

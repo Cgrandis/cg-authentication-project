@@ -1,21 +1,23 @@
-import { NextResponse } from "next/server";
-import { verify } from "jsonwebtoken";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import prisma from "@/lib/prisma";
+import { NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
-    const cookie = req.headers.get("cookie");
-    const token = cookie?.split("token=")[1]?.split(";")[0];
+    const session = await getServerSession(authOptions);
 
-    if (!token) return NextResponse.json({ error: "Token não encontrado" }, { status: 401 });
-
-    const decoded = verify(token, process.env.JWT_SECRET as string) as any;
+    if (!session || !session.user?.id) {
+      return NextResponse.json({ error: "Não autenticado" }, { status: 401 });
+    }
 
     const user = await prisma.user.findUnique({
-      where: { id: decoded.id },
+      where: { id: session.user.id },
     });
 
-    if (!user) return NextResponse.json({ error: "Usuário não encontrado" }, { status: 404 });
+    if (!user) {
+      return NextResponse.json({ error: "Usuário não encontrado" }, { status: 404 });
+    }
 
     const { password, ...safeUser } = user;
     return NextResponse.json(safeUser);

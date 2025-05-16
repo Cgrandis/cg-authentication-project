@@ -13,6 +13,7 @@ model User {
   email           String    @unique
   password        String?    
   role            Role?
+  slug            String?   @unique
   image           String?
   contactNumber   String?
   instagramLink   String?

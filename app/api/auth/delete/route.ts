@@ -1,22 +1,23 @@
 import { NextResponse } from "next/server";
-import { verify } from "jsonwebtoken";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import prisma from "@/lib/prisma";
 
-export async function DELETE(req: Request) {
+export async function DELETE() {
   try {
-    const cookie = req.headers.get("cookie");
-    const token = cookie?.split("token=")[1]?.split(";")[0];
+    const session = await getServerSession(authOptions);
 
-    if (!token) return NextResponse.json({ error: "Token ausente" }, { status: 401 });
-
-    const decoded = verify(token, process.env.JWT_SECRET as string) as any;
+    if (!session || !session.user?.id) {
+      return NextResponse.json({ error: "Não autenticado." }, { status: 401 });
+    }
 
     await prisma.user.delete({
-      where: { id: decoded.id },
+      where: { id: session.user.id },
     });
 
     return NextResponse.json({ success: true });
   } catch (error) {
+    console.error("Erro ao deletar conta:", error);
     return NextResponse.json({ error: "Erro ao deletar conta" }, { status: 500 });
   }
 }

@@ -1,13 +1,13 @@
 import MainHeader from "@/app/components/MainHeader";
+import Hero from "@/app/components/Hero";
+import Description from "@/app/components/Description";
 
 export default function HomePage() {
   return (
-    <div>
+    <div className="w-full">
       <MainHeader />
-      <main className="p-6">
-        <h1 className="text-2xl font-bold">Bem-vindo ao portfólio!</h1>
-        
-      </main>
+      <Hero />
+      <Description />
     </div>
   );
 }

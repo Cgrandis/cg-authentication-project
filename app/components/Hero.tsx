@@ -73,7 +73,7 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight text-[#72E5F2]">
-            Back-end <span className="text-[#2175BF]">e Front-end medida</span>
+            Back-end <span className="text-[#2175BF]">e Front-end Dev</span>
           </h1>
           <p className="text-lg text-[#72E5F2] mb-6">
             Desenvolvimento ágil e inteligente.

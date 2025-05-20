@@ -1,5 +1,4 @@
 import { headers } from "next/headers";
-import Header from "@/app/components/Header";
 import PublicProfileCard from "@/app/components/PublicProfileCard";
 
 export default async function PublicProfilePage({ params }: { params: { slug: string } }) {
@@ -10,7 +9,6 @@ export default async function PublicProfilePage({ params }: { params: { slug: st
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <Header />
       <div className="max-w-4xl mx-auto p-6 sm:p-10">
         <PublicProfileCard fetchUrl={fetchUrl} />
       </div>

@@ -19,7 +19,7 @@ export default function MainHeader() {
           <Menu size={24} />
         </button>
         <span className="text-xl font-semibold text-gray-800">
-          Carlos Grandis Desenvolvimento
+          Carlos Grandis Dev
         </span>
       </div>
 

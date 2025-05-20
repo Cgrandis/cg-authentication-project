@@ -78,12 +78,18 @@ const AdminDashboard = () => {
         />
       </div>
 
-      <div className="p-10">
+      <div className="p-10 flex flex-col sm:flex-row gap-4">
         <button
           onClick={() => router.push("/register/administrador")}
           className="bg-black text-white px-4 py-2 rounded hover:bg-blue-700 transition-all"
         >
           Registrar Novo Administrador
+        </button>
+        <button
+          onClick={() => router.push("/admin/techsdescription")}
+          className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-blue-700 transition-all"
+        >
+          Gerenciar Textos de Techs
         </button>
       </div>
     </div>

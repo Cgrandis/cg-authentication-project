@@ -17,7 +17,7 @@ const services = [
   { icon: Bot, label: "AI Chat Bots" },
   { icon: MessageCircleMore, label: "WhatsApp Connect" },
   { icon: ShoppingCart, label: "Next.js Commerce" },
-  { icon: Settings, label: "Aplicações sob demanda" },
+  { icon: Settings, label: "Aplicações sob demanda." },
 ];
 
 const techStack = [
@@ -30,6 +30,9 @@ const techStack = [
   { src: "/logos/google-cloud.png", alt: "Google Cloud" },
   { src: "/logos/react.png", alt: "React" },
   { src: "/logos/psql.png", alt: "PostgreSQL" },
+  { src: "/logos/prisma-psql.jpg", alt: "prisma"},
+  { src: "/logos/vercel.png", alt: "vercel" },
+  { src: "/logos/github.png", alt: "github" },
 ];
 
 export default function Hero() {
@@ -70,10 +73,10 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight text-[#72E5F2]">
-            Soluções Digitais <span className="text-[#2175BF]">sob medida</span>
+            Back-end <span className="text-[#2175BF]">e Front-end medida</span>
           </h1>
           <p className="text-lg text-[#72E5F2] mb-6">
-            Desenvolvimento ágil e inteligente para sua necessidade.
+            Desenvolvimento ágil e inteligente.
           </p>
           <ul className="space-y-4 text-lg text-white font-medium">
             {services.map(({ icon: Icon, label }, index) => (
@@ -92,7 +95,7 @@ export default function Hero() {
           className="hidden md:block"
         >
           <h2 className="text-3xl font-semibold mb-6 text-[#72E5F2]">
-            Tech Solutions
+            Technologias que utilizo:
           </h2>
           <div className={`grid ${gridCols} gap-6 justify-items-center`}>
             {techStack.map((tech, index) => (

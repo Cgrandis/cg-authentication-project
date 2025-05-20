@@ -13,7 +13,7 @@ export default function MainHeader() {
   const closeMenu = () => setShowMenu(false);
 
   return (
-    <header className="flex items-center justify-between px-6 py-4 bg-white shadow-md border-b relative z-50">
+    <header className="flex items-center justify-between px-6 py-3 bg-white shadow-md border-b relative z-50">
       <div className="flex items-center gap-3">
         <button onClick={toggleMenu} className="text-gray-700 hover:text-black">
           <Menu size={24} />
@@ -25,7 +25,7 @@ export default function MainHeader() {
 
       <div className="flex items-center gap-4">
         <a
-          href="https://github.com/seu-usuario"
+          href="https://github.com/Cgrandis"
           target="_blank"
           rel="noopener noreferrer"
           className="text-gray-600 hover:text-black transition"
@@ -33,7 +33,7 @@ export default function MainHeader() {
           <FaGithub size={20} />
         </a>
         <a
-          href="https://linkedin.com/in/seu-perfil"
+          href="https://www.linkedin.com/in/carlos-grandis-3b1413252/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-gray-600 hover:text-black transition"
@@ -50,7 +50,6 @@ export default function MainHeader() {
         </a>
       </div>
 
-      {/* Menu com animação */}
       <AnimatePresence>
         {showMenu && <MainMenu onClose={closeMenu} />}
       </AnimatePresence>

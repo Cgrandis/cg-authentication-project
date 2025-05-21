@@ -1,9 +1,9 @@
 import MainHeader from "@/app/components/MainHeader";
 import MainFooter from "@/app/components/MainFooter";
-import Introduction from "@/app/components/portfoliopage/Introduction";
-import PortfolioLinks from "../components/portfoliopage/PortfolioLinks";
-import ResponsiveHero from "../components/portfoliopage/examplohero/ResponsiveHero";
-
+import Introduction from "@/app/components/portfoliopage/sections/Introduction";
+import PortfolioLinks from "../components/portfoliopage/sections/PortfolioLinks";
+import ResponsiveHero from "../components/portfoliopage/sections/ResponsiveHero";
+import FixerHero from "../components/portfoliopage/sections/CurrencyExchangeHero";
 
 export default function HomePage() {
   return (
@@ -12,6 +12,7 @@ export default function HomePage() {
       <Introduction />
       <PortfolioLinks />
       <ResponsiveHero />
+      <FixerHero />
       <MainFooter />
     </div>
   );

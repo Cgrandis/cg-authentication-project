@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { TechDescription } from "@/types/interfaces";
+import { TechDescription } from "@/app/types/interfaces";
 
 const images: Record<string, string> = {
   "Next.js": "/logos/next-js.webp",

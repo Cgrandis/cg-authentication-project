@@ -11,7 +11,7 @@ interface MainMenuProps {
 const mockLinks = [
   { label: "Início", href: "/", icon: <Home size={18} /> },
   { label: "Sobre", href: "/profile/carlos-grandis", icon: <Info size={18} /> },
-  { label: "Portfólio", href: "#projetos", icon: <FileText size={18} /> },
+  { label: "Portfólio", href: "/portfolio", icon: <FileText size={18} /> },
   { label: "Contato", href: "#contato", icon: <Mail size={18} /> },
 ];
 

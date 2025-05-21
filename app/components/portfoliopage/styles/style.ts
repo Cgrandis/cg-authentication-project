@@ -13,7 +13,15 @@ const styles = {
 
   marginX: "sm:mx-16 mx-6",
   marginY: "sm:my-16 my-6",
-};
 
+  gradients: {
+    pink: "bg-gradient-to-r from-pink-300 to-pink-600 filter blur-[900px]",
+    white: "bg-white bg-opacity-60 filter blur-[750px]",
+    blue: "bg-gradient-to-t from-transparent via-blue-800 to-transparent filter blur-[123px]",
+    discount: "bg-gradient-to-tr from-gray-700 to-indigo-900",
+    text: "bg-gradient-to-br from-teal-100 via-teal-200 to-teal-500 text-transparent bg-clip-text",
+    green: "bg-gradient-to-br from-[#F2F2F2] via-[#52F2B8] to-[#37A686]",
+  },
+};
 
 export default styles;

@@ -13,7 +13,7 @@ export default function MainHeader() {
   const closeMenu = () => setShowMenu(false);
 
   return (
-    <header className="flex items-center justify-between px-6 py-3 bg-white shadow-md border-b relative z-50">
+    <header className="flex items-center justify-between px-6 py-3 bg-white shadow-sm relative z-50">
       <div className="flex items-center gap-3">
         <button onClick={toggleMenu} className="text-gray-700 hover:text-black">
           <Menu size={24} />

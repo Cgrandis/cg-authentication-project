@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/app/components/Header";
-import { TechDescription } from "@/types/interfaces";
+import { TechDescription } from "@/app/types/interfaces";
 
 export default function TechsDescriptionPage() {
   const [title, setTitle] = useState("");

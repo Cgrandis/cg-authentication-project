@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useExchangeRates } from "@/app/hooks/portfoliohooks/useExchangeRates";
+import { useExchangeRates } from "@/app/hooks/portfolio/useExchangeRates";
 import { getFlagUrl } from "@/app/utils/getFlagUrl";
 import { containerVariants, itemVariants } from "../shared/motionVariants";
 

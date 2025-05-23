@@ -1,12 +1,12 @@
 "use client";
 
-import Header from "@/app/components/Header";
+import Header from "@/app/components/authentication/utils/Header";
 import { Eye, Trash2, Copy } from "lucide-react";
-import UploadFotos from "@/app/components/ui/UploadPicsService";
+import UploadFotos from "@/app/components/authentication/profile/UploadPicsService";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import ProfilePhotoUploader from "@/app/components/provider/ProfilePhotoUploader";
-import FormSection from "@/app/components/provider/FormSection";
+import ProfilePhotoUploader from "@/app/components/authentication/profile/ProfilePhotoUploader";
+import FormSection from "@/app/components/authentication/forms/FormSection";
 import { useProviderProfile } from "@/app/hooks/useProviderProfile";
 
 const ProviderProfile = () => {

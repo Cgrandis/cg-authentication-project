@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/app/components/ui/Cards";
+import { Card, CardContent } from "@/app/components/authentication/shared/Cards";
 
 interface ServiceCardProps {
   title: string;

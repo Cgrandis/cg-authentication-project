@@ -1,6 +1,6 @@
 "use client";
 
-import AboutMe from "@/app/components/ui/AboutMe";
+import AboutMe from "@/app/components/authentication/utils/AboutMe";
 
 export default function Description() {
   return (

@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import PublicProfileCard from "@/app/components/PublicProfileCard";
+import PublicProfileCard from "@/app/components/authentication/profile/PublicProfileCard";
 
 export default async function PublicProfilePage({ params }: { params: { slug: string } }) {
   const host = (await headers()).get("host");

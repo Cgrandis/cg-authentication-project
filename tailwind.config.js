@@ -17,6 +17,12 @@ module.exports = {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
       },
+      borderWidth: {
+        DEFAULT: "1px",
+      },
+      borderColor: {
+        DEFAULT: "var(--tw-border-color, #e5e7eb)",
+      },
     },
     screens: {
       xs: "480px",

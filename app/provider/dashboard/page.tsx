@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Header from "@/app/components/Header";
-import ServiceCard from "@/app/components/ServiceCard";
+import Header from "@/app/components/authentication/utils/Header";
+import ServiceCard from "@/app/components/authentication/dashboard/ServiceCard";
 import { UserCircle } from "lucide-react";
 
 interface Service {

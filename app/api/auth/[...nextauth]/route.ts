@@ -21,16 +21,21 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
-
+          if (!credentials?.email || !credentials?.password) {
+          throw new Error("Credenciais incompletas");
+        }
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
 
-        if (!user || !user.password) return null;
+          if (!user || !user.password) {
+          throw new Error("Usuário não encontrado");
+        }
 
         const isValid = await bcrypt.compare(credentials.password, user.password);
-        if (!isValid) return null;
+        if (!isValid) {
+          throw new Error("Senha inválida");
+        }
 
         return user;
       },
@@ -56,7 +61,7 @@ export const authOptions = {
   },
   pages: {
     signIn: "/login/prestadordeservico_usuario",
-    error: "/login/prestadordeservico_usuario",
+    error: "/api/auth/error",
   },
   session: {
     strategy: "jwt" as SessionStrategy,

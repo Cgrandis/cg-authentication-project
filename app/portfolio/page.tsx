@@ -1,5 +1,5 @@
-import MainHeader from "@/app/components/MainHeader";
-import MainFooter from "@/app/components/MainFooter";
+import MainHeader from "@/app/components/landingpage/MainHeader";
+import MainFooter from "@/app/components/landingpage/MainFooter";
 import Introduction from "@/app/components/portfoliopage/sections/Introduction";
 import PortfolioLinks from "../components/portfoliopage/sections/PortfolioLinks";
 import ResponsiveHero from "../components/portfoliopage/sections/ResponsiveHero";

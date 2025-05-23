@@ -3,26 +3,31 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { LogOut } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
 
 const Header = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { data: session } = useSession();
 
   const handleLogout = async () => {
     setLoading(true);
 
     try {
-      const response = await fetch("/api/auth/logout", {
-        method: "GET",
+      let callbackUrl = "/login/prestadordeservico_usuario";
+
+      if (session?.user?.role === "ADMIN") {
+        callbackUrl = "/login/administrador";
+      }
+
+      await signOut({
+        redirect: true,
+        callbackUrl: callbackUrl,
       });
 
-      if (response.ok) {
-        router.push("/login/prestadordeservico_usuario");
-      } else {
-        alert("Erro ao fazer logout.");
-      }
     } catch (error) {
       console.error("Erro ao fazer logout:", error);
+      alert("Erro ao fazer logout.");
     } finally {
       setLoading(false);
     }

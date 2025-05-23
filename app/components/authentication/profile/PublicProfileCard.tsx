@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { SiInstagram, SiLinkedin } from "react-icons/si";
-import ImageGalleryModal from "@/app/components/ui/ImageGalleryModal";
+import ImageGalleryModal from "@/app/components/authentication/shared/ImageGalleryModal";
 
 interface ProfileData {
   name: string;

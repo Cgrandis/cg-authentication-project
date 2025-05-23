@@ -1,7 +1,7 @@
-import MainHeader from "@/app/components/MainHeader";
-import Hero from "@/app/components/Hero";
-import Description from "@/app/components/Description";
-import MainFooter from "@/app/components/MainFooter";
+import MainHeader from "@/app/components/landingpage/MainHeader";
+import Hero from "@/app/components/landingpage/Hero";
+import Description from "@/app/components/landingpage/Description";
+import MainFooter from "@/app/components/landingpage/MainFooter";
 
 export default function HomePage() {
   return (

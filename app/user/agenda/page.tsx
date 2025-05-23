@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Header from "@/app/components/Header";
+import Header from "@/app/components/authentication/utils/Header";
 
 const UserAgenda = () => {
   const router = useRouter();

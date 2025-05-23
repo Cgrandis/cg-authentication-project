@@ -28,3 +28,35 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .form-input {
+    @apply w-full px-4 py-3 text-sm border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition;
+  }
+
+  .form-label {
+    @apply block mb-1 text-sm text-gray-700 font-medium;
+  }
+
+  .form-section {
+    @apply w-full max-w-xl p-10 bg-white rounded-2xl shadow-2xl border border-gray-100 space-y-6;
+  }
+
+  .form-title {
+    @apply text-4xl font-semibold text-center text-[#1E293B];
+  }
+
+  .form-divider {
+    @apply relative text-center text-gray-400 text-sm my-2;
+  }
+
+  .form-divider::before,
+  .form-divider::after {
+    content: \"\"; display: block; position: absolute; top: 50%; width: 100%; height: 1px;
+    background-color: #e5e7eb;
+  }
+
+  .form-divider span {
+    @apply bg-white px-2 relative z-10;
+  }
+}

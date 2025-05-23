@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Header from "@/app/components/Header";
-import AvailabilitySelector from "@/app/components/ui/AddServiceAvailability";
-import UploadFotos from "@/app/components/ui/UploadPicsService";
+import Header from "@/app/components/authentication/utils/Header";
+import AvailabilitySelector from "@/app/components/authentication/availablility/AddServiceAvailability";
+import UploadFotos from "@/app/components/authentication/profile/UploadPicsService";
 
 const AddService = () => {
   const router = useRouter();

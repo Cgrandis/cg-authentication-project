@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Header from "@/app/components/Header";
-import StatCard from "@/app/components/StatCard";
+import Header from "@/app/components/authentication/utils/Header";
+import StatCard from "@/app/components/authentication/dashboard/StatCard";
 
 const AdminDashboard = () => {
   const router = useRouter();

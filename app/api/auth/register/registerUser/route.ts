@@ -5,6 +5,25 @@ import bcrypt from "bcrypt";
 export async function POST(req: Request) {
   try {
     const { name, email, password } = await req.json();
+
+    if (!name || !email || !password) {
+      return NextResponse.json(
+        { error: "Nome, email e senha são obrigatórios." },
+        { status: 400 }
+      );
+    }
+
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existingUser) {
+      return NextResponse.json(
+        { error: "Este e-mail já está em uso." },
+        { status: 400 }
+      );
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await prisma.user.create({
@@ -18,6 +37,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ user }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: "User registration failed" }, { status: 500 });
+    console.error("Erro ao registrar usuário:", error); 
+    return NextResponse.json({ error: "Falha no registro do usuário." }, { status: 500 });
   }
 }

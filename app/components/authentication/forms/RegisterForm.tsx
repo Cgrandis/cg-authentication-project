@@ -19,6 +19,7 @@ export default function RegisterForm({
 }: RegisterFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
 
   const {
     register,
@@ -31,6 +32,7 @@ export default function RegisterForm({
 
   const onSubmit = async (form: RegisterSchema) => {
     setLoading(true);
+    setMessage(null);
 
     const endpoint =
       role === "PROVIDER"
@@ -51,13 +53,16 @@ export default function RegisterForm({
       const data = await res.json();
 
       if (res.ok) {
-        alert("Conta criada com sucesso!");
-        router.push(onSuccessRedirect);
+        setMessage({ text: "Conta criada com sucesso!", type: "success" }); 
+
+        setTimeout(() => {
+          router.push(onSuccessRedirect);
+        }, 500); 
       } else {
-        alert(data.error || "Erro ao criar a conta.");
+        setMessage({ text: data.error || "Erro ao criar a conta.", type: "error" });
       }
     } catch (err) {
-      alert("Erro inesperado.");
+      setMessage({ text: "Erro inesperado.", type: "error" }); 
       console.error("Erro:", err);
     } finally {
       setLoading(false);
@@ -71,6 +76,17 @@ export default function RegisterForm({
       </h2>
 
       <div className="space-y-5">
+        {message && ( 
+          <div
+            className={`p-3 rounded-lg text-center ${
+              message.type === "success" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+            }`}
+            role="status"
+          >
+            {message.text}
+          </div>
+        )}
+
         <FormInput
           label="Nome completo"
           placeholder="Seu nome"

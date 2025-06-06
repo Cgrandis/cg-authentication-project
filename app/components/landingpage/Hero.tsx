@@ -56,7 +56,7 @@ export default function Hero() {
           quality={80}
           loading="eager"
           className="w-full h-full object-cover"
-          onLoadingComplete={() => setImageLoaded(true)}
+          onLoad={() => setImageLoaded(true)}
         />
         <div className="absolute inset-0 bg-black/40" />
       </div>
